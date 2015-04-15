@@ -177,24 +177,7 @@ class Celestial(object):
 		return xeclip * factor, yeclip * factor, zeclip * factor
 
 
-# def drawCircle(center = (0, 0), radius = 1):
-# 	# posx, posy = 0,0    
-# 	sides = 32
-# 	h = VERTICAL_HEIGHT - .001
-# 	# glRectf(-20, -20, 20, 20)
-# 	glTranslatef(0, 0, -h)
-# 	glBegin(GL_POLYGON)
-# 	for i in range(100):    
-# 		cosine = radius * math.cos(i*2*pi/sides) + center[0]
-# 		sine  = radius * math.sin(i*2*pi/sides) + center[1]
-# 		glVertex2f(cosine,sine)
-# 	glEnd()    
-
-# 	glTranslatef(0, 0, h)
-
-	def draw( self, day, base_distance ):
-	# def draw( self, center=(0,0,0), radius=.5, sides=15 ):
-		# return
+	def draw( self, day ):
 		center = self.coordinates(day)
 		radius = self.radius
 		sides = 15
@@ -229,60 +212,12 @@ class Celestial(object):
 		finally:
 			glPopMatrix()
 
-		# # vertical shadow at floor
-		# h = base_distance - .001
-		# glTranslatef(0, 0, -h)
-		# glBegin(GL_POLYGON)
-		# for i in range(100):    
-		# 	cosine = radius * math.cos(i*2*math.pi/sides) + center[0]
-		# 	sine  = radius * math.sin(i*2*math.pi/sides) + center[1]
-		# 	glVertex2f(cosine,sine)
-		# glEnd()    
-		# glTranslatef(0, 0, h)
-
-		# # draw vertical line
-		# glColor3f(0.0, 0.0, 0.0);
-		# glBegin(GL_LINES)
-		# # glVertex3f(start[0], start[1], start[2])
-		# glVertex3f(center[0], center[1], center[2])
-		# glVertex3f(center[0], center[1], -base_distance)
-		# glEnd()
-
-
-
-		# orbit
-		# glColor3f(1.0, 0.0, 0.0);
-		# for i in range(20):
-		# 	prev_center = center
-		# 	center = self.coordinates(day - 2 * i)
-		# 	glBegin(GL_LINES)
-		# 	# glVertex3f(start[0], start[1], start[2])
-		# 	glVertex3f(prev_center[0], prev_center[1], prev_center[2])
-		# 	glVertex3f(center[0], center[1], center[2])
-		# 	glEnd()
-	
-
 
 class Sun(Celestial):
-	def draw(self, day, base_distance):
-		# return
+	def draw(self, day):
 		center = (0, 0)
 		radius = .1
 		sides = 15
-
-		# # vertical shadow at floor
-		# h = base_distance - .001
-		# glTranslatef(0, 0, -h)
-		# glBegin(GL_POLYGON)
-		# for i in range(100):    
-		# 	cosine = radius * math.cos(i*2*math.pi/sides) + center[0]
-		# 	sine  = radius * math.sin(i*2*math.pi/sides) + center[1]
-		# 	glVertex2f(cosine,sine)
-		# glEnd()    
-		# glTranslatef(0, 0, h)
-
-
-
 		glDisable(GL_LIGHTING)
 		glColor3fv(GLfloat_3(1,1,.5))
 		glEnable(GL_BLEND); #Enable blending.
@@ -295,13 +230,6 @@ class Sun(Celestial):
 
 
 		glColor3fv(GLfloat_3(.91,.91,.45))
-		# glColor3fv(GLfloat_3(1,1,1))
-		# glRotate(day_since_2000, 0, 0, 1)
-		# drawWireSphere(center=(0, 0, 0), radius=.21, sides=25)
-		# drawWireSphere(center=(0, 0, 0), radius=.125)
-
-		# glColor4fv(GLfloat_4(1,1,1, .05))
-		# glutSolidSphere(.115, 25, 25)
 
 		glColor4fv(GLfloat_4(0,0,0, .15))
 		# glutSolidSphere(.15, 25, 25)
@@ -309,12 +237,6 @@ class Sun(Celestial):
 		glColor4fv(GLfloat_4(.9,.9,.45, .55))
 
 		glutWireSphere(radius + .02, 25, 25)
-
-		# glRotate(-day_since_2000, 0, 0, 1)
-
-
-		# glutBitmapCharacter(GLUT_BITMAP_9_BY_15, ctypes.c_int(ord('a')))
-
 
 		glEnable(GL_LIGHTING)
 
@@ -404,21 +326,8 @@ def day_number(date):
 	return (367 * date.year - (7 * (date.year + ((date.month + 9) / 12))) / 4 + (275 * date.month) / 9 + date.day - 730530) + (1.0 * date.hour / 24 + 1.0 * date.minute / (24 * 60) + 1.0 * date.second / (24 * 60 * 60))
 
 def date_from_today(days):
-	# day = int(days)
-	# hour = int((days-day) % 24)
-	# min = int((days - day - hour)%60)
-	# return datetime.datetime.now() + datetime.timedelta(days = days, )
 	return datetime.datetime.now() + datetime.timedelta(days = days)
-	# return datetime.datetime(2025, 1, 1) + datetime.timedelta(days = days)
 
-
-# print datetime.datetime.now()
-# print date_from_today(.01)
-# def full_date(day)
-
-# print day_number(datetime.datetime.now())
-
-# global mercury
 sun = Sun()
 
 mercury = Celestial(48.3313, 3.24587E-5,
@@ -492,10 +401,6 @@ neptune = Celestial(
 pluto = Pluto()
 
 
-# def __init__(self, N1 = 0, N2 = 0,
- # I1 = 0, I2 = 0, W1 = 0, W2 = 0, A1 = 0, A2 = 0, 
- # E01 = 0, E02 = 0, M1 = 0, M2 = 0):
-
 NearAsteroids = []
 
 class Asteroid(Celestial):
@@ -520,7 +425,7 @@ class Asteroid(Celestial):
 		# self.radius = .01
 		# self.arg = arg
 
-	def draw( self, day, base_distance ):
+	def draw( self, day ):
 	# def draw( self, center=(0,0,0), radius=.5, sides=15 ):
 		center = self.coordinates(day)
 		radius = self.radius
@@ -531,13 +436,8 @@ class Asteroid(Celestial):
 		try:
 			# glPointSize( 2.0 );
 			glBegin( GL_POINTS );
-			# glColor4fv(GLfloat_4(1,1,1, .75))
 			glColor3fv(GLfloat_3(1,1,1))
-			# glColor4f( 0.95, 0.20, 0.031, 1.0 );
-			# for ( int i = 0; i < g_numPoints; ++i )
-			# {
 			glVertex3f( 0, 0, 0 );
-			# }
 			glEnd();
 
 			# glEnable(GL_BLEND); #Enable blending.
@@ -567,18 +467,14 @@ class Asteroid(Celestial):
 					break
 			if found == False:
 				if len(NearAsteroids) == 5:
-					NearAsteroids.pop(0)
+					NearAsteroids.pop()
 				NearAsteroids.append(self)
 				self.near_date = date_from_today(day - day_number(datetime.datetime.utcnow()))
 			# print NearAsteroids
 
-	# def check_collision(self, day, collision_with):
 	def check_collision(self, center, day, collision_with):
-		# center1 = self.coordinates(day)
 		center2 = collision_with.coordinates(day)
-		if abs(center[0] - center2[0]) < .05 and abs(center[1] - center2[1]) < .05 and abs(center[2] - center2[2]) < .05:
-			# print pow(pow(center[0] - center2[0], 2) + pow(center[1] - center2[1], 2) + pow(center[2] - center2[2], 2), .5)
-			# return True
+		if abs(center[0] - center2[0]) < .02 and abs(center[1] - center2[1]) < .02 and abs(center[2] - center2[2]) < .02:
 			return pow(pow(center[0] - center2[0], 2) + pow(center[1] - center2[1], 2) + pow(center[2] - center2[2], 2), .5)
 		else:
 			return -1
@@ -587,15 +483,10 @@ class Asteroid(Celestial):
 
 asteroids = []
 def init_asteroids():
-
-	# with open('asteroids_200.json') as data_file:    
-	# with open('hazardasteroids_final.json') as data_file:    
 	with open('hazardasteroids_final.json') as data_file:    
 		asteroids_json = json.load(data_file)
-
-
 	c = 0
-	t = 500
+	t = 2000
 	# print asteroids_json
 	for asteroid in asteroids_json:
 		# if c == 0:
@@ -619,8 +510,6 @@ init_asteroids()
 
 def main():
 	pass
-
-
 
 	# d = day_number(datetime.datetime.utcnow())
 	# print mercury.coordinates(d)
