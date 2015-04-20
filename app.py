@@ -26,7 +26,7 @@ except ImportError, err:
 	try: 
 		from Numeric import *
 	except ImportError, err:
-		print "This demo requires the numpy or Numeric extension, sorry"
+		print "This app requires the numpy or Numeric extension, sorry"
 		import sys
 		sys.exit()
 
@@ -410,10 +410,9 @@ class FaceThread(threading.Thread):
 		import sys, getopt
 		global mousex, mousey, A_FACECENTER
 		args, video_src = getopt.getopt(sys.argv[1:], '', ['cascade=', 'nested-cascade='])
-		try:
-			video_src = video_src[0]
-		except:
-			video_src = 0
+	
+		video_src = 0
+	
 		args = dict(args)
 		cascade_fn = args.get('--cascade', "../../data/haarcascades/haarcascade_frontalface_alt.xml")
 		# cascade_fn = args.get('--cascade', "../../data/haarcascades/haarcascade_upperbody.xml")
@@ -485,6 +484,9 @@ if __name__ == '__main__':
 	listener = SampleListener()
 	controller.add_listener(listener)
 
+	if sys.argv[1] == 'nofacedetect':
+		video_enabled = False
+
 	thread1 = GlutThread()
 	thread2 = FaceThread()    
 	if video_enabled:
@@ -497,3 +499,5 @@ if __name__ == '__main__':
 
 	# Remove the sample listener when done
 	controller.remove_listener(listener)
+
+
