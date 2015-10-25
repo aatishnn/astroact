@@ -15,11 +15,11 @@ For Ubuntu based systems, following may work for handling requirements
 To be sure, check `face detection samples` bundled with OpenCV.
 
 ## Running
-  1. Connect Leap Motion Device(optional) 
+  1. Connect Leap Motion Device(optional)
   2. Run app.py via `python2 app.py` or `python app.py`
   
 ### Running without face detection
-TO run the program without face detection, do `python2 app.py nofacedetect`.    
+To run the program without face detection, do `python2 app.py nofacedetect`.    
 Following controls are available if face detection is disabled: 
   1. Mouse cursor can move the viewport
   2. `+` and `-` can change zoom levels
